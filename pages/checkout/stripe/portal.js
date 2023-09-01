@@ -1,10 +1,15 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import React from "react";
 import { getStripeObj } from "@/utils/stripe";
 
-export default async (req, res) => {
+export default function CheckoutPortalPage({ localeObj }) {
+  return (<></>);
+};
+
+export async function getServerSideProps({ query, req, res }) {
   const _proto = req.headers["x-forwarded-proto"] || (req.connection.encrypted ? "https" : "http");
   const _host = `${_proto}://${req.headers.host}`;
-  const { subscriptionId = false, successRedirectUrl = false, cancelRedirectUrl = _host } = req.query;
+  const { subscriptionId = false, successRedirectUrl = false, cancelRedirectUrl = _host } = query;
 
   try {
     if (!subscriptionId || !successRedirectUrl) { throw new Error("Information incomplete"); }
@@ -15,8 +20,18 @@ export default async (req, res) => {
       return_url: successRedirectUrl
     });
 
-    return res.redirect(303, _portalSession.url);
+    return {
+      redirect: {
+        destination:  _portalSession.url,
+        permanent: false
+      }
+    };
   } catch (error) {
-    return res.redirect(303, `${_host}/error?message=${error.message}&homeUrl=${cancelRedirectUrl}`);
+    return {
+      redirect: {
+        destination: `${_host}/error?message=${error.message}&homeUrl=${cancelRedirectUrl}`,
+        permanent: false
+      }
+    };
   }
 };

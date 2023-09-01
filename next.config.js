@@ -1,5 +1,4 @@
 /** @type {import('next').NextConfig} */
-const keys = require("./private.key.js");
 const websiteSetting = require("./website.config.js");
 
 const nextConfig = {
@@ -22,7 +21,6 @@ const nextConfig = {
     PARSE_SERVER_URL: "https://parseapi.back4app.com",
     PARSE_APPLICATION_ID: "0z7MPWat3Ie4pKJzs48lIif1Vfs6tT90OdEm8iJU",
     PARSE_REST_API_KEY: "euhIL8u7nsu70Oh0Nq2UjkMyouE32OfzS41lBE4U",
-    ...keys,
     ...websiteSetting
   }
 };

@@ -102,7 +102,7 @@ export async function getServerSideProps({ params, query, locale, req, res }) {
     }
     
     if (!paymentCode) { throw new AppError({ text: "stripe-error", status: 500, message: "No pay code" }); }
-    const _json = Buffer.from(paymentCode, 'base64').toString('utf8');
+    const _json = decodeURIComponent(Buffer.from(paymentCode, 'base64').toString('utf8'));
     const {
       mode = "payment",
       service = false,

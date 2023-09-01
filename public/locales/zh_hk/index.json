@@ -1,0 +1,18 @@
+{
+  "introduction-title": "成立目的",
+  "services-title": "提供服務",
+  "custom-title": "自訂方案",
+  "introduction": "全球每日消費大量紙張。 各行各業如餐飲業, 補習業, 工程等每日都使用過多不必要紙張。 我們致力提供一個無紙方案平台, 利用Webapp技術提供各電子平台及程序取代使用紙張, 致力去紙化, 讓各界減省用紙成本。",
+  "contact-name": "你的名字",
+  "contact-email": "聯絡電郵",
+  "contact-content": "填寫客制要求",
+  "information-required": "請填寫你的名字, 聯絡電郵及客制要求。",
+  "send-complete": "你的要求己送出, 我們很快有專人會聯絡你。",
+  "services-category": "服務種類",
+  "app-category": ["全部", "辨公", "教育", "餐飲", "工程", "休閒"],
+  "app-list": [
+    { "name": "nightmaths", "title": "深宵教室", "description": "深宵教室是一個線上學習平台,提供視像課程/線上課程/筆記,主力提供各種類型數學 (IB, GCE, DSE, M1, M2)", "category": "教育" },
+    { "name": "showmeyourlove", "title": "粟米肉粒", "description": "粟米肉粒是一個示愛平台,勇敢向你的心儀對象表達愛意!", "category": "休閒" },    
+    { "name": "twmj", "title": "計番器神器", "description": "台灣麻將計番器是一個熱愛麻雀必備app，功能包括計番，拉庄及計數。立即開局試試看。", "category": "休閒" }
+  ]
+}

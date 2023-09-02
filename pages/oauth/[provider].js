@@ -78,7 +78,7 @@ export async function getServerSideProps({ params, query, req, res }) {
 
   if (requestLink) {
     if (!oauthCode) { throw new AppError({ text: `${provider}-signin`, status: 500, message: "No oauth code" }); }
-    const _json = Buffer.from(oauthCode, 'base64').toString('utf8');
+    const _json = decodeURIComponent(Buffer.from(oauthCode, 'base64').toString('utf8'));
     const { service = false } = JSON.parse(_json);
     if (!service) { throw new AppError({ text: `${provider}-signin`, status: 500, message: "Oauth information is incomplete" }); }
 
@@ -93,7 +93,7 @@ export async function getServerSideProps({ params, query, req, res }) {
 
   try {
     if (!state) { throw new AppError({ text: `${provider}-signin`, status: 500, message: `${provider} does not pass the oauth code` }); }
-    const _json = Buffer.from(state, 'base64').toString('utf8');
+    const _json = decodeURIComponent(Buffer.from(state, 'base64').toString('utf8'));
     const { service = false, successRedirectUrl = `${_proto}://${req.headers.host}`, cancelRedirectUrl = _cancelRedirectUrl, trialMinutes = 15 } = JSON.parse(_json);
     _cancelRedirectUrl = cancelRedirectUrl;
 

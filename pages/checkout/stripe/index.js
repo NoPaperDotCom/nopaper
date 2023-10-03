@@ -160,7 +160,7 @@ export async function getServerSideProps({ params, query, locale, req, res }) {
     };
  
     const _product = await _stripeObj.products.create({
-      name: `${item} (${_formatDate(_now)} - ${_formatDate(_endDate)})`,
+      name: (mode === "subscription") ? item : `${item} (${_formatDate(_now)} - ${_formatDate(_endDate)})`,
       description: _localeJson.terms.replace("{{link}}", `${_proto}://${req.headers.host}/policy`)
     });
 

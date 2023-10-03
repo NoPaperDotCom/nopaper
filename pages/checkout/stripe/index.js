@@ -141,9 +141,9 @@ export async function getServerSideProps({ params, query, locale, req, res }) {
     const _endDate = new Date();
     let _days = days;
     if (mode === "subscription") {
-      if (_days < 1) { _days = 1; }
-      else if (_days < 7) { _days = 7; }
-      else if (_days < 30) { _days = 30; }
+      if (_days <= 1) { _days = 1; }
+      else if (_days <= 7) { _days = 7; }
+      else if (_days <= 30) { _days = 30; }
       else { _days = 365; }
     }
     _endDate.setDate(_now.getDate() + _days);

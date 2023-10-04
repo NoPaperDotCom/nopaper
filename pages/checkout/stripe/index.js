@@ -69,6 +69,7 @@ export async function getServerSideProps({ params, query, locale, req, res }) {
       const _session = await _stripeObj.checkout.sessions.retrieve(sessionId);
       if (!_session || _session["payment_status"] !== "paid") { throw new AppError({ text: "stripe-error", status: 500, message: _session["payment_status"] }); }
 
+      console.log(_session);
       const _metaData = _session.metadata;
       const _subscription = _session.subscription;
       const _customer = _session.customer;
@@ -81,9 +82,9 @@ export async function getServerSideProps({ params, query, locale, req, res }) {
         userName: _metaData.userName,
         email: _metaData.email,
         method: "stripe",
-        refNumber: _session.payment_intent,
+        refNumber: _session.invoice,
         startDate: parseInt(_metaData.startDate),
-        subscriptionId: (_subscription && _customer) ? `${_customer.id}#${_subscription.id}` : false,
+        subscriptionId: (_subscription && _customer) ? `${_customer}#${_subscription}` : false,
         days: parseInt(_metaData.days),
         item: _metaData.item,
         price: _session.amount_total / 100,
@@ -180,9 +181,20 @@ export async function getServerSideProps({ params, query, locale, req, res }) {
     }
 
     const _price = await _stripeObj.prices.create(_priceConfig);
+    const _invoice = (mode === "subscription") ? {} : {
+      invoice_creation: {
+        enabled: true,
+        invoice_data: {
+          metadata: _metaData,
+          description: (mode === "subscription") ? `${serviceName} - ${item}` : `${serviceName} - ${item} (${_formatDate(_now)} - ${_formatDate(_endDate)})`,
+          footer: "nopaper.life"
+        }
+      }
+    };
 
     // Create Checkout Sessions.
     const _session = await _stripeObj.checkout.sessions.create({
+      ..._invoice,
       line_items: [{
         price: _price.id,
         quantity: 1

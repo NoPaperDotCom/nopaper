@@ -69,7 +69,6 @@ export async function getServerSideProps({ params, query, locale, req, res }) {
       const _session = await _stripeObj.checkout.sessions.retrieve(sessionId);
       if (!_session || _session["payment_status"] !== "paid") { throw new AppError({ text: "stripe-error", status: 500, message: _session["payment_status"] }); }
 
-      console.log(_session);
       const _metaData = _session.metadata;
       const _subscription = _session.subscription;
       const _customer = _session.customer;
